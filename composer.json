@@ -1,12 +1,12 @@
 {
     "name": "wenxin/qrcode",
-    "description": "This is a customize qrcode generator.",
-    "keywords": ["qrcode", "qrcode genetator", "generator", "icon", "frame"],
+    "description": "This is a QR code generator made for Laravel.",
+    "keywords": ["qrcode", "qrcode generator", "generator", "frame", "icon"],
     "license" : "MIT",
     "authors": [
         {
             "name": "wenxin",
-            "email": "genxin0909@gmail.com"
+            "email": "gwenxin0909@gmail.com"
         }
     ],
     "require": {
@@ -31,7 +31,7 @@
                 "Wenxin\\Qrcode\\QrCodeServiceProvider"
             ],
             "aliases": {
-                "QrCodeGen": "Wenxin\\Qrcode\\Facades\\QrCodeGen"
+                "QrCode": "Wenxin\\Qrcode\\Facades\\QrCode"
             }
         }
     }
