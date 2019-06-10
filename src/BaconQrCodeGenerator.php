@@ -1,6 +1,6 @@
 <?php
 
-namespace Wenxin\Customqrcode;
+namespace Wenxin\Qrcode;
 
 use BaconQrCode;
 use BaconQrCode\Common\ErrorCorrectionLevel;
@@ -231,7 +231,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
      *
      * @param string $method
      *
-     * @return Wenxin\Customqrcode\DataTypes\DataTypeInterface
+     * @return Wenxin\Qrcode\DataTypes\DataTypeInterface
      */
     private function createClass($method)
     {
@@ -255,7 +255,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     {
         $method = ucfirst($method);
 
-        $class = "Wenxin\Customqrcode\DataTypes\\".$method;
+        $class = "Wenxin\Qrcode\DataTypes\\".$method;
 
         return $class;
     }
