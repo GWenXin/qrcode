@@ -123,7 +123,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Changes the size of the QrCode.
+     * Sets the size of the QrCode.
      *
      * @param int $pixels The size of the QrCode in pixels
      *
@@ -138,7 +138,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Changes the foreground color of a QrCode.
+     * Sets the foreground color of a QrCode.
      *
      * @param int $red
      * @param int $green
@@ -154,7 +154,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Changes the background color of a QrCode.
+     * Sets the background color of a QrCode.
      *
      * @param int $red
      * @param int $green
@@ -170,7 +170,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Changes the error correction level of a QrCode.
+     * Sets the error correction level of a QrCode.
      *
      * @param string $level Desired error correction level.  L = 7% M = 15% Q = 25% H = 30%
      *
@@ -261,7 +261,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Set the curve of the QrCode.
+     * Sets the curve of the QrCode.
      *
      * @param int $curve_width The size of the QrCode curve width in pixels
      * @param int $curve_height The size of the QrCode curve height in pixels
@@ -354,7 +354,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         return $img;
     }
     /**
-     * Set position of the qrcode in the frame
+     * Sets position of the qrcode in the frame
      *
      * @param int $position_x set position x of qrcode
      * @param int $position_y set position y of qrcode
