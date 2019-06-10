@@ -84,7 +84,7 @@ interface QrCodeInterface
     /**
      * Merges an image with the center of the QrCode.
      *
-     * @param $image string The filepath to an image
+     * @param string $image The filepath to an image
      *
      * @return $this
      */
@@ -94,8 +94,8 @@ interface QrCodeInterface
     /**
      * Curve of the QrCode.
      *
-     * @param $curve_width int size of curve width
-     * @param $curve_height int size of curve height
+     * @param int $curve_width size of curve width
+     * @param int $curve_height size of curve height
      *
      * @return $this
      */
@@ -103,7 +103,7 @@ interface QrCodeInterface
     /**
      * Frame of the QrCode.
      *
-     * @param $frame string The filepath to an frame
+     * @param string $frame The filepath to an frame
      *
      * @return $this
      */
@@ -111,8 +111,8 @@ interface QrCodeInterface
     /**
      * Size of the frame.
      *
-     * @param $frame_width int size of frame width
-     * @param $frame_height int size of frame height
+     * @param int $frame_width size of frame width
+     * @param int $frame_height size of frame height
      *
      * @return $this
      */
@@ -121,8 +121,8 @@ interface QrCodeInterface
     /**
      * position of the QrCode in the frame.
      *
-     * @param $position_x int The position x of the qrcode in the frame
-     * @param $position_y int The position y of the qrcode in the frame
+     * @param int $position_x The position x of the qrcode in the frame
+     * @param int $position_y The position y of the qrcode in the frame
      *
      * @return $this
      */
