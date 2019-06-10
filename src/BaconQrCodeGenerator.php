@@ -261,9 +261,10 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Changes the curve width of the QrCode.
+     * Set the curve of the QrCode.
      *
-     * @param int $curve The size of the QrCode curve in pixels
+     * @param int $curve_width The size of the QrCode curve width in pixels
+     * @param int $curve_height The size of the QrCode curve height in pixels
      *
      * @return $this
      */
@@ -288,7 +289,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     /**
      * Merges an icon with the center of the QrCode.
      *
-     * @param $filepath string The filepath to an icon
+     * @param string $filepath The filepath to an icon
      *
      * @return $this
      */
@@ -323,7 +324,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     /**
      * Upload image of the Frame.
      *
-     * @param int $pixels The size of the frame in pixels
+     * @param int $frame The filepath to the frame
      *
      * @return $this
      */
@@ -332,7 +333,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $this->frame = imagecreatefromstring($frame);
     }
     /**
-     * Changes the size of the Frame.
+     * Set the size of the Frame.
      *
      * @param int $frame_width The size of the frame
      * @param int $frame_height The size of the frame
@@ -352,6 +353,14 @@ class BaconQrCodeGenerator implements QrCodeInterface
         // return $this;
         return $img;
     }
+    /**
+     * Set position of the qrcode in the frame
+     *
+     * @param int $position_x set position x of qrcode
+     * @param int $position_y set position y of qrcode
+     *
+     * @return $this
+     */
     public function position($position_x, $position_y)
     {
         $this->writer->getRenderer()->setWidth($position_x);
@@ -362,7 +371,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         //image 2
         $path_2 = 'QRHasLogo.png'; //$path_2 = $imagick;
         
-        //imagecreatefrompng($filename)--由文件或 URL 创建一个新图象
+        //imagecreatefrompng($filename)
         $image_1 = imagecreatefromstring(file_get_contents($path_1));
         $image_2 = imagecreatefromstring(file_get_contents($path_2));             
         
