@@ -283,8 +283,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
             );
             Storage::disk('public')->put('qr.png', $imagick);
 
-        //return $this;
-        return $imagick;
+        return $this;
+        //return $imagick;
     }   
     
     /**
@@ -319,8 +319,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $QRWithIcon = "QRWithIcon.png";
         imagepng($QR, $QRWithIcon);
 
-        // return $this;
-        return $QRWithIcon;
+         return $this;
+       // return $QRWithIcon;
     }
     /**
      * Upload image of the Frame.
@@ -333,6 +333,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
     {
         //$this->frame = imagecreatefromstring($frame);
         $this->frame = file_get_contents($frame);
+        
+        return $this;
     }
     /**
      * Set the size of the Frame.
@@ -352,8 +354,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $img->resize($frame_width, $frame_height); //(x, y)
         $img->save(public_path('new_frame.png')); // resized frame
 
-        // return $this;
-        return $img;
+         return $this;
+        //return $img;
     }
     /**
      * Sets position of the qrcode in the frame
@@ -385,7 +387,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
         // merge images   
         var_dump(imagepng($image_3,'merge.png'));
 
-        return $image3;
+        //return $image3;
+        return this;
         
     }
 }
