@@ -293,13 +293,13 @@ class BaconQrCodeGenerator implements QrCodeInterface
      *
      * @return $this
      */
-    public function merge_icon($filepath)
+    public function merge_icon($merge_icon)
     {
         if (function_exists('base_path')) {
-            $filepath = base_path().$filepath;
+            $merge_icon = base_path().$merge_icon;
         }
 
-        $this->merge_icon = file_get_contents($filepath);
+        $this->merge_icon = file_get_contents($merge_icon);
 
         //qrcode merge icon
         $QR = imagecreatefromstring($imagick);   // qr code
