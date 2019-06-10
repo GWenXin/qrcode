@@ -89,7 +89,7 @@ interface QrCodeInterface
      * @return $this
      */
   // public function merge($image, $percentage = .2);
-    public function merge_icon($image);
+    public function merge_icon($merge_icon);
 
     /**
      * Curve of the QrCode.
