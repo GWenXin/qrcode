@@ -82,13 +82,13 @@ interface QrCodeInterface
     public function encoding($encoding);
 
     /**
-     * Merges an image with the center of the QrCode.
+     * Merges an icon with the center of the QrCode.
      *
-     * @param string $image The filepath to an image
+     * @param string $marge_icon The filepath to an image
      *
      * @return $this
      */
-    public function merge($image, $percentage = .2);
+//     public function merge($image, $percentage = .2);
     public function merge_icon($merge_icon);
 
     /**
