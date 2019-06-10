@@ -1,6 +1,6 @@
 <?php
 
-namespace Wenxin\Qrcode;
+namespace Wenxin\Customqrcode;
 
 use Illuminate\Support\ServiceProvider;
 
