@@ -1,0 +1,38 @@
+{
+    "name": "wenxin/qrcode",
+    "description": "This is a customize qrcode generator.",
+    "keywords": ["qrcode", "qrcode genetator", "generator", "icon", "frame"],
+    "license" : "MIT",
+    "authors": [
+        {
+            "name": "wenxin",
+            "email": "genxin0909@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+      	"ext-gd": "*",
+        "bacon/bacon-qr-code": "1.0.*",
+        "intervention/image": "^2.4",
+        "illuminate/support": ">=5.0.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wenxin\\Qrcode\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wenxin\\Qrcode\\QrCodeServiceProvider"
+            ],
+            "aliases": {
+                "QrCodeGen": "Wenxin\\Qrcode\\Facades\\QrCodeGen"
+            }
+        }
+    }
+}
