@@ -315,7 +315,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         // reassemble the image and resize
         imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
         // qr code with icon at the center
-        $QRHasLogo = "QRWithIcon.png";
+        $QRWithIcon = "QRWithIcon.png";
         imagepng($QR, $QRWithIcon);
 
         // return $this;
