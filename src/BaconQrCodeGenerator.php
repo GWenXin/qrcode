@@ -330,7 +330,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
      */
     public function frame($frame)
     {
-        $this->frame = imagecreatefromstring($frame);
+        //$this->frame = imagecreatefromstring($frame);
+        $this->frame = file_get_contents($frame);
     }
     /**
      * Set the size of the Frame.
