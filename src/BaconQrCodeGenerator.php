@@ -276,8 +276,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $imagick = new Imagick(public_path('qrcode.png'));
         $imagick->statisticImage(
                 Imagick::STATISTIC_MEDIAN,
-                $curve_width, //width
-                $curve_height, // height
+                $curve_width, // qrcode curve width
+                $curve_height, // qrcode curve height
                 Imagick::CHANNEL_DEFAULT
             );
             Storage::disk('public')->put('qr.png', $imagick);
@@ -302,7 +302,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $this->merge_icon = file_get_contents($merge_icon);
 
         //qrcode merge icon
-        $QR = imagecreatefromstring($imagick);   // qr code
+        $QR = imagecreatefromstring($imagick);   // qr code after
         $logo = imagecreatefrompng($merge_icon); // icon 
         $QR_width = imagesx($QR);                // qr code width
         $QR_height = imagesy($QR);               // qr code height
