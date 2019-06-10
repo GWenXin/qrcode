@@ -11,9 +11,6 @@ use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Renderer\Image\RendererInterface;
 use BaconQrCode\Renderer\Image\Svg;
 use BaconQrCode\Writer;
-use Imagick;
-use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Support\Facades\Storage;
 
 class BaconQrCodeGenerator implements QrCodeInterface
 {
@@ -75,11 +72,11 @@ class BaconQrCodeGenerator implements QrCodeInterface
     public function generate($text, $filename = null)
     {
         $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection);
-        
+
         if ($this->imageMerge !== null) {
             $merger = new ImageMerge(new Image($qrCode), new Image($this->imageMerge));
             $qrCode = $merger->merge($this->imagePercentage);
-        } 
+        }
 
         if ($filename === null) {
             return $qrCode;
@@ -87,6 +84,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
 
         return file_put_contents($filename, $qrCode);
     }
+
     /**
      * Merges an image with the center of the QrCode.
      *
@@ -101,10 +99,29 @@ class BaconQrCodeGenerator implements QrCodeInterface
         if (function_exists('base_path') && !$absolute) {
             $filepath = base_path().$filepath;
         }
+
         $this->imageMerge = file_get_contents($filepath);
         $this->imagePercentage = $percentage;
+
         return $this;
     }
+
+    /**
+     * Merges an image string with the center of the QrCode, does not check for correct format.
+     *
+     * @param $content string The string contents of an image.
+     * @param $percentage float The amount that the merged image should be placed over the qrcode.
+     *
+     * @return $this
+     */
+    public function mergeString($content, $percentage = .2)
+    {
+        $this->imageMerge = $content;
+        $this->imagePercentage = $percentage;
+
+        return $this;
+    }
+
     /**
      * Switches the format of the outputted QrCode or defaults to SVG.
      *
@@ -116,12 +133,6 @@ class BaconQrCodeGenerator implements QrCodeInterface
      */
     public function format($format)
     {
-        if($format == 'png')
-        {
-            $this->writer->setRenderer(new Png());
-        }else{
-            throw new \InvalidArgumentException('Invalid format provided.');
-        }
         switch ($format) {
             case 'png':
                 $this->writer->setRenderer(new Png());
@@ -140,7 +151,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Sets the size of the QrCode.
+     * Changes the size of the QrCode.
      *
      * @param int $pixels The size of the QrCode in pixels
      *
@@ -155,7 +166,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Sets the foreground color of a QrCode.
+     * Changes the foreground color of a QrCode.
      *
      * @param int $red
      * @param int $green
@@ -171,7 +182,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Sets the background color of a QrCode.
+     * Changes the background color of a QrCode.
      *
      * @param int $red
      * @param int $green
@@ -187,7 +198,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
 
     /**
-     * Sets the error correction level of a QrCode.
+     * Changes the error correction level of a QrCode.
      *
      * @param string $level Desired error correction level.  L = 7% M = 15% Q = 25% H = 30%
      *
@@ -275,137 +286,5 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $class = "Wenxin\Qrcode\DataTypes\\".$method;
 
         return $class;
-    }
-
-    /**
-     * Sets the curve of the QrCode.
-     *
-     * @param int $curve_width The size of the QrCode curve width in pixels
-     * @param int $curve_height The size of the QrCode curve height in pixels
-     *
-     * @return $this
-     */
-    public function curve($curve_width,$curve_height)
-    {
-        $this->writer->getRenderer()->setWidth($curve_width);
-        $this->writer->getRenderer()->setHeight($curve_height);
-
-        //$imagick = new Imagick(public_path('qrcode.png')); 
-        $imagick = new Imagick($qrCode);
-        $imagick->statisticImage(
-                Imagick::STATISTIC_MEDIAN,
-                $curve_width, // qrcode curve width
-                $curve_height, // qrcode curve height
-                Imagick::CHANNEL_DEFAULT
-            );
-            Storage::disk('public')->put('qr.png', $imagick);
-
-        return $this;
-        //return $imagick;
-    }   
-    
-    /**
-     * Merges an icon with the center of the QrCode.
-     *
-     * @param string $filepath The filepath to an icon
-     *
-     * @return $this
-     */
-    public function merge_icon($merge_icon)
-    {
-        if (function_exists('base_path')) {
-            $merge_icon = base_path().$merge_icon;
-        }
-
-        $this->merge_icon = file_get_contents($merge_icon);
-
-        //qrcode merge icon
-        $QR = imagecreatefrompng($imagick);   // qr code
-        $logo = imagecreatefrompng($merge_icon); // icon 
-        $QR_width = imagesx($QR);                // qr code width
-        $QR_height = imagesy($QR);               // qr code height
-        $logo_width = imagesx($logo);            // logo weight
-        $logo_height = imagesy($logo);           // logo height
-        $logo_qr_width = $QR_width / 4;
-        $scale = $logo_width/$logo_qr_width;
-        $logo_qr_height = $logo_height/$scale;
-        $from_width = ($QR_width - $logo_qr_width) / 2;
-        // reassemble the image and resize
-        imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
-        // qr code with icon at the center
-        $QRWithIcon = "QRWithIcon.png";
-        imagepng($QR, $QRWithIcon);
-
-         return $this;
-       // return $QRWithIcon;
-    }
-    /**
-     * Upload image of the Frame.
-     *
-     * @param int $frame The filepath to the frame
-     *
-     * @return $this
-     */
-    public function frame($frame)
-    {
-        //$this->frame = imagecreatefromstring($frame);
-        $this->frame = file_get_contents($frame);
-        
-        return $this;
-    }
-    /**
-     * Set the size of the Frame.
-     *
-     * @param int $frame_width The size of the frame
-     * @param int $frame_height The size of the frame
-     *
-     * @return $this
-     */
-    public function frame_size($frame_width, $frame_height)
-    {
-        $this->writer->getRenderer()->setWidth($frame_width);
-        $this->writer->getRenderer()->setHeight($frame_height);
-        
-        // resize frame        
-        $img = Image::make($frame);
-        $img->resize($frame_width, $frame_height); //(x, y)
-        $img->save(public_path('new_frame.png')); // resized frame
-
-         return $this;
-        //return $img;
-    }
-    /**
-     * Sets position of the qrcode in the frame
-     *
-     * @param int $position_x set position x of qrcode
-     * @param int $position_y set position y of qrcode
-     *
-     * @return $this
-     */
-    public function position($position_x, $position_y)
-    {
-        $this->writer->getRenderer()->setWidth($position_x);
-        $this->writer->getRenderer()->setHeight($position_y);
-        
-        //image 1 - frame resized
-        $path_1 = 'new_frame.png';
-        //image 2
-        $path_2 = 'QRWithIcon.png'; //$path_2 = $imagick;
-        
-        //imagecreatefrompng($filename)
-        $image_1 = imagecreatefromstring(file_get_contents($path_1));
-        $image_2 = imagecreatefromstring(file_get_contents($path_2));             
-        
-        $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
-        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
-
-        // merge                               x            y
-        imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
-        // merge images   
-        var_dump(imagepng($image_3,'merge.png'));
-
-        //return $image3;
-        return this;
-        
     }
 }
