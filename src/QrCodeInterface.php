@@ -90,5 +90,4 @@ interface QrCodeInterface
      * @return $this
      */
     public function merge($image, $percentage = .2);
-
 }
