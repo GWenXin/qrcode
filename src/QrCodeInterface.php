@@ -93,7 +93,7 @@ interface QrCodeInterface
     /**
      * Size of the frame.
      *
-     *@param string $frame_path The framepath to an frame
+     * @param string $frame_path The framepath to an frame
      * @param int $frame_width size of frame width
      * @param int $frame_height size of frame height
      *
@@ -110,4 +110,12 @@ interface QrCodeInterface
      * @return $this
      */
     public function position($position_x, $position_y);
+    /**
+     * Icon merge at the center of the qrcode.
+     *
+     * @param string $merge_icon The framepath to merge icon
+     *
+     * @return $this
+     */
+    public function merge_icon($merge_icon);
 }
