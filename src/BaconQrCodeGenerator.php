@@ -271,6 +271,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
 
         return new $class();
     }
+
     /**
      * Formats the method name correctly.
      *
@@ -285,5 +286,5 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $class = "Wenxin\Qrcode\DataTypes\\".$method;
 
         return $class;
-    }  
+    }
 }
