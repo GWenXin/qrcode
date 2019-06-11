@@ -322,7 +322,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         //image 1 - frame resized
         $path_1 = 'new_frame.png';
         //image 2
-        $path_2 = $qrCode; //$path_2 = $imagick;
+        $path_2 = 'qrcode.png'; //$path_2 = $imagick;
         
         //imagecreatefrompng($filename)
         $image_1 = imagecreatefromstring(file_get_contents($path_1));
