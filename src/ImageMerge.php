@@ -80,7 +80,7 @@ class ImageMerge implements ImageMergeInterface
      * @param $sourceImage Image The image that will be merged over.
      * @param $mergeImage Image The image that will be used to merge with $sourceImage
      */
-    public function __construct(Picture $sourceImage,  Picture $mergeImage)
+    public function __construct(Image $sourceImage,  Image $mergeImage)
     {
         $this->sourceImage = $sourceImage;
         $this->mergeImage = $mergeImage;
