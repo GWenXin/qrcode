@@ -12,7 +12,6 @@ use BaconQrCode\Renderer\Image\RendererInterface;
 use BaconQrCode\Renderer\Image\Svg;
 use BaconQrCode\Writer;
 //use Intervention\Image\ImageManagerStatic as Image;
-
 use App\Image;
 
 class BaconQrCodeGenerator implements QrCodeInterface
