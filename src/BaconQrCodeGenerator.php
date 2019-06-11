@@ -240,6 +240,54 @@ class BaconQrCodeGenerator implements QrCodeInterface
 
         return $this;
     }
+        /**
+     * Changes the size of the Frame.
+     *
+     * @param int $frame_path The frame path of the frame
+     * @param int $frame_width The size of the frame
+     * @param int $frame_height The size of the frame
+     *
+     * @return $this
+     */
+    public function frame($frame_path, $frame_width, $frame_height)
+    {
+        $this->frame = file_get_contents($frame_path);
+        $this->writer->getRenderer()->setWidth($frame_width);
+        $this->writer->getRenderer()->setHeight($frame_height);
+        
+        // resize frame        
+        $img = ImageQr::make($frame_path);
+        $img->resize($frame_width, $frame_height); //(x, y)
+        $img->save(public_path('new_frame.png')); // resized frame
+
+        return $this;
+       // return $img;
+    }
+    public function position($position_x, $position_y)
+    {
+        $this->writer->getRenderer()->setPositionWidth($position_x);
+        $this->writer->getRenderer()->setPositionHeight($position_y);
+        
+        //image 1 - frame resized
+        $path_1 = 'new_frame.png';
+        //image 2
+        $path_2 = 'qrcode.png'; //$path_2 = $imagick;
+        
+        //imagecreatefrompng($filename)
+        $image_1 = imagecreatefromstring(file_get_contents($path_1));
+        $image_2 = imagecreatefromstring(file_get_contents($path_2));             
+        
+        $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+
+        // merge                               x            y
+        imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
+        // merge images   
+        var_dump(imagepng($image_3,'merge.png'));
+
+        //return $image3;
+        return $this;
+    }
 
     /**
      * Creates a new datatype object and then generates a QrCode.
@@ -288,53 +336,5 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $class = "Wenxin\Qrcode\DataTypes\\".$method;
 
         return $class;
-    }
-    /**
-     * Changes the size of the Frame.
-     *
-     * @param int $frame_path The frame path of the frame
-     * @param int $frame_width The size of the frame
-     * @param int $frame_height The size of the frame
-     *
-     * @return $this
-     */
-    public function frame($frame_path, $frame_width, $frame_height)
-    {
-        $this->frame = file_get_contents($frame_path);
-        $this->writer->getRenderer()->setWidth($frame_width);
-        $this->writer->getRenderer()->setHeight($frame_height);
-        
-        // resize frame        
-        $img = ImageQr::make($frame_path);
-        $img->resize($frame_width, $frame_height); //(x, y)
-        $img->save(public_path('new_frame.png')); // resized frame
-
-        return $this;
-       // return $img;
-    }
-    public function position($position_x, $position_y)
-    {
-        $this->writer->getRenderer()->setWidth($position_x);
-        $this->writer->getRenderer()->setHeight($position_y);
-        
-        //image 1 - frame resized
-        $path_1 = 'new_frame.png';
-        //image 2
-        $path_2 = 'qrcode.png'; //$path_2 = $imagick;
-        
-        //imagecreatefrompng($filename)
-        $image_1 = imagecreatefromstring(file_get_contents($path_1));
-        $image_2 = imagecreatefromstring(file_get_contents($path_2));             
-        
-        $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
-        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
-
-        // merge                               x            y
-        imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
-        // merge images   
-        var_dump(imagepng($image_3,'merge.png'));
-
-        //return $image3;
-        return $this;
     }
 }
