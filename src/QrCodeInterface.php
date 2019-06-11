@@ -90,4 +90,23 @@ interface QrCodeInterface
      * @return $this
      */
     public function merge($image, $percentage = .2);
+    /**
+     * Frame of the QrCode.
+     *
+     * @param string $frame The filepath to an frame
+     * @param int $frame_width size of frame width
+     * @param int $frame_height size of frame height
+     *
+     * @return $this
+     */
+    public function frame($frame, $frame_width, $frame_height);    
+    /**
+     * position of the QrCode in the frame.
+     *
+     * @param int $position_x The position x of the qrcode in the frame
+     * @param int $position_y The position y of the qrcode in the frame
+     *
+     * @return $this
+     */
+    public function position($position_x, $position_y);
 }
