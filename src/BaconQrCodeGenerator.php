@@ -11,9 +11,6 @@ use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Renderer\Image\RendererInterface;
 use BaconQrCode\Renderer\Image\Svg;
 use BaconQrCode\Writer;
-use Imagick;
-use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Support\Facades\Storage;
 
 class BaconQrCodeGenerator implements QrCodeInterface
 {
@@ -227,6 +224,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
 
         return $this;
     }
+
     /**
      * Sets the Encoding mode.
      *
@@ -288,121 +286,5 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $class = "Wenxin\Qrcode\DataTypes\\".$method;
 
         return $class;
-    }
-        /**
-     * Changes the curve width of the QrCode.
-     *
-     * @param int $curve The size of the QrCode curve in pixels
-     *
-     * @return $this
-     */
-    public function curve($curve_width,$curve_height)
-    {
-        $this->writer->getRenderer()->setWidth($curve_width);
-        $this->writer->getRenderer()->setHeight($curve_height);
-
-        $imagick = new Imagick(public_path('qrcode.png'));
-        $imagick->statisticImage(
-                Imagick::STATISTIC_MEDIAN,
-                $curve_width, //width
-                $curve_height, // height
-                Imagick::CHANNEL_DEFAULT
-            );
-            Storage::disk('public')->put('qr.png', $imagick);
-
-        //return $this;
-        return $imagick;
-    }   
-    
-    /**
-     * Merges an icon with the center of the QrCode.
-     *
-     * @param string $filepath The filepath to an icon
-     *
-     * @return $this
-     */
-    public function merge_icon($merge_icon)
-    {
-        if (function_exists('base_path')) {
-            $merge_icon = base_path().$merge_icon;
-        }
-
-        $this->merge_icon = file_get_contents($merge_icon);
-
-        //qrcode merge icon
-        $QR = imagecreatefromstring($imagick);   // qr code
-        $logo = imagecreatefrompng($merge_icon); // icon 
-        $QR_width = imagesx($QR);                // qr code width
-        $QR_height = imagesy($QR);               // qr code height
-        $logo_width = imagesx($logo);            // logo weight
-        $logo_height = imagesy($logo);           // logo height
-        $logo_qr_width = $QR_width / 4;
-        $scale = $logo_width/$logo_qr_width;
-        $logo_qr_height = $logo_height/$scale;
-        $from_width = ($QR_width - $logo_qr_width) / 2;
-        // reassemble the image and resize
-        imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
-        // qr code with icon at the center
-        $QRWithIcon = "QRWithIcon.png";
-        imagepng($QR, $QRWithIcon);
-
-        // return $this;
-        return $QRWithIcon;
-    }
-    /**
-     * Upload image of the Frame.
-     *
-     * @param int $pixels The size of the frame in pixels
-     *
-     * @return $this
-     */
-    public function frame($frame)
-    {
-        $this->frame = imagecreatefromstring($frame);
-    }
-    /**
-     * Changes the size of the Frame.
-     *
-     * @param int $frame_width The size of the frame
-     * @param int $frame_height The size of the frame
-     *
-     * @return $this
-     */
-    public function frame_size($frame_width, $frame_height)
-    {
-        $this->writer->getRenderer()->setWidth($frame_width);
-        $this->writer->getRenderer()->setHeight($frame_height);
-        
-        // resize frame        
-        $img = Image::make($frame);
-        $img->resize($frame_width, $frame_height); //(x, y)
-        $img->save(public_path('new_frame.png')); // resized frame
-
-        // return $this;
-        return $img;
-    }
-    public function position($position_x, $position_y)
-    {
-        $this->writer->getRenderer()->setWidth($position_x);
-        $this->writer->getRenderer()->setHeight($position_y);
-        
-        //image 1 - frame resized
-        $path_1 = 'new_frame.png';
-        //image 2
-        $path_2 = 'QRWithIcon.png'; //$path_2 = $imagick;
-        
-        //imagecreatefrompng($filename)--由文件或 URL 创建一个新图象
-        $image_1 = imagecreatefromstring(file_get_contents($path_1));
-        $image_2 = imagecreatefromstring(file_get_contents($path_2));             
-        
-        $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
-        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
-
-        // merge                               x            y
-        imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
-        // merge images   
-        var_dump(imagepng($image_3,'merge.png'));
-
-        return $image3;        
     }
 }
