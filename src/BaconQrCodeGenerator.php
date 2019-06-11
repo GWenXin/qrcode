@@ -11,7 +11,7 @@ use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Renderer\Image\RendererInterface;
 use BaconQrCode\Renderer\Image\Svg;
 use BaconQrCode\Writer;
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManagerStatic as ImageQr;
 
 
 class BaconQrCodeGenerator implements QrCodeInterface
@@ -305,7 +305,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $this->writer->getRenderer()->setHeight($frame_height);
         
         // resize frame        
-        $img = Image::make($frame_path);
+        $img = ImageQr::make($frame_path);
         $img->resize($frame_width, $frame_height); //(x, y)
         $img->save(public_path('new_frame.png')); // resized frame
 
