@@ -265,8 +265,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
     }
     public function position($position_x, $position_y)
     {
-        $this->writer->getRenderer()->setPositionWidth($position_x);
-        $this->writer->getRenderer()->setPositionHeight($position_y);
+        $this->writer->getRenderer()->setWidth($position_x);
+        $this->writer->getRenderer()->setHeight($position_y);
         
         //image 1 - frame resized
         $path_1 = 'new_frame.png';
