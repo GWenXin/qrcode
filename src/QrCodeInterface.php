@@ -98,16 +98,6 @@ interface QrCodeInterface
      * @param int $frame_height size of frame height
      *
      * @return $this
-     */
-    public function frame($frame, $frame_width, $frame_height);    
-    /**
-     * position of the QrCode in the frame.
-     *
-     * @param int $position_x The position x of the qrcode in the frame
-     * @param int $position_y The position y of the qrcode in the frame
-     *
-     * @return $this
-     */
-    public function position($position_x, $position_y);
+     */  
     
 }
