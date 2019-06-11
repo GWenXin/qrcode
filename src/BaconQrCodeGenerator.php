@@ -11,10 +11,7 @@ use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Renderer\Image\RendererInterface;
 use BaconQrCode\Renderer\Image\Svg;
 use BaconQrCode\Writer;
-use Imagick;
-//use Intervention\Image\ImageManagerStatic as Image;
-use Image;
-use Illuminate\Support\Facades\Storage;
+
 
 class BaconQrCodeGenerator implements QrCodeInterface
 {
@@ -290,53 +287,5 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $class = "Wenxin\Qrcode\DataTypes\\".$method;
 
         return $class;
-    }
-   /**
-     * Changes the size of the Frame.
-     *
-     * @param int $frame The filepath of the frame
-     * @param int $frame_width The size of the frame
-     * @param int $frame_height The size of the frame
-     *
-     * @return $this
-     */
-    public function frame($frame, $frame_width, $frame_height)
-    {
-        $this->frame = file_get_contents($frame);
-        $this->writer->getRenderer()->setWidth($frame_width);
-        $this->writer->getRenderer()->setHeight($frame_height);
-        
-        // resize frame        
-        $img = Image::make($frame);
-        $img->resize($frame_width, $frame_height); //(x, y)
-        $img->save(public_path('new_frame.png')); // resized frame
-
-        return $this;
-       // return $img;
-    }
-    public function position($position_x, $position_y)
-    {
-        $this->writer->getRenderer()->setWidth($position_x);
-        $this->writer->getRenderer()->setHeight($position_y);
-        
-        //image 1 - frame resized
-        $path_1 = 'new_frame.png';
-        //image 2
-        $path_2 = 'qrcode.png'; //$path_2 = $imagick;
-        
-        //imagecreatefrompng($filename)
-        $image_1 = imagecreatefromstring(file_get_contents($path_1));
-        $image_2 = imagecreatefromstring(file_get_contents($path_2));             
-        
-        $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
-        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
-
-        // merge                               x            y
-        imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
-        // merge images   
-        var_dump(imagepng($image_3,'merge.png'));
-
-        //return $image3;
-        return $this;
     }
 }
