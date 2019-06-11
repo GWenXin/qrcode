@@ -292,28 +292,17 @@ class BaconQrCodeGenerator implements QrCodeInterface
         return $class;
     }
     /**
-     * Upload image of the Frame.
-     *
-     * @param int $frame The filepath of the frame
-     *
-     * @return $this
-     */
-    public function frame($frame)
-    {
-       $this->frame = file_get_contents($frame);
-        
-        return $this;              
-    }
-    /**
      * Changes the size of the Frame.
      *
+     * @param int $frame The filepath of the frame
      * @param int $frame_width The size of the frame
      * @param int $frame_height The size of the frame
      *
      * @return $this
      */
-    public function frame_size($frame_width, $frame_height)
+    public function frame($frame, $frame_width, $frame_height)
     {
+        $this->frame = file_get_contents($frame);
         $this->writer->getRenderer()->setWidth($frame_width);
         $this->writer->getRenderer()->setHeight($frame_height);
         
