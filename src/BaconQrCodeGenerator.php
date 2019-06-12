@@ -327,7 +327,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $this->writer->getRenderer()->setHeight($position_y);
         
         //image 1 - frame resized
-        $path_1 = 'var/www/html/qrcode_package/storage/new_frame.png';
+        $path_1 = storage_path('new_frame.png');
         //image 2
         $path_2 = 'QRHasLogo.png';  // $path_2 = 'qrcode.png'; || $path_2 = $imagick;
         
