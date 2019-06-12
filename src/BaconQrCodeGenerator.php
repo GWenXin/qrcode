@@ -85,7 +85,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
             return $qrCode;
         }             
           
-        return file_put_contents($filename, $qrCode);   
+        return file_put_contents(public_path($filename), $qrCode);   
     }
 
     /**
