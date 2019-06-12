@@ -361,7 +361,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
             //qrcode merge icon       
             $this->merge_icon = file_get_contents($merge_icon);
         
-             $QR = imagecreatefromstring(file_get_contents(storage_path('qrcode.png')));   // qr code
+             $QR = imagecreatefromstring(file_get_contents(storage_path('app/qr.png')));   // qr code
              $logo = imagecreatefrompng($merge_icon); // icon 
              $QR_width = imagesx($QR);                // qr code width
              $QR_height = imagesy($QR);               // qr code height
