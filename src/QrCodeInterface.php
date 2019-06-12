@@ -118,4 +118,13 @@ interface QrCodeInterface
      * @return $this
      */
     public function merge_icon($merge_icon);
+    /**
+     * Curve of the QrCode.
+     *
+     * @param int $curve_width size of curve width
+     * @param int $curve_height size of curve height
+     *
+     * @return $this
+     */
+    public function curve($curve_width, $curve_height);
 }
