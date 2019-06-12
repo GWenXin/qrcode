@@ -89,7 +89,7 @@ interface QrCodeInterface
      *
      * @return $this
      */
-    public function merge($image, $percentage = .2);
+//     public function merge($image, $percentage = .2);
     /**
      * Size of the frame.
      *
