@@ -378,4 +378,29 @@ class BaconQrCodeGenerator implements QrCodeInterface
         
         return $this;
     }
+    /**
+     * Sets Qrcode curve
+     *     
+     * @param int $curve_width The curve width of the qrcode
+     * @param int $curve_height The curve height of the qrcode
+     *
+     * @return $this
+     */
+    public function curve($curve_width,$curve_height)
+    {
+        $this->writer->getRenderer()->setWidth($curve_width);
+        $this->writer->getRenderer()->setHeight($curve_height);
+
+        $imagick = new Imagick(public_path('qrcode.png'));
+        $imagick->statisticImage(
+                Imagick::STATISTIC_MEDIAN,
+                $curve_width, //width
+                $curve_height, // height
+                Imagick::CHANNEL_DEFAULT
+            );
+            Storage::disk('public')->put('qr.png', $imagick);
+
+       return $this;
+       // return $imagick;
+    }  
 }
