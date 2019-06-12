@@ -327,7 +327,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $this->writer->getRenderer()->setHeight($position_y);
         
         //image 1 - frame resized
-        $path_1 = 'http://wtest01.is.my/new_frame.png';
+        $path_1 = 'var/www/html/qrcode_package/storage/new_frame.png';
         //image 2
         $path_2 = 'QRHasLogo.png';  // $path_2 = 'qrcode.png'; || $path_2 = $imagick;
         
@@ -361,7 +361,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
             //qrcode merge icon       
             $this->merge_icon = file_get_contents($merge_icon);
         
-             $QR = imagecreatefromstring(file_get_contents('qrcode.png'));   // qr code
+             $QR = imagecreatefromstring(file_get_contents('var/www/html/qrcode_package/storage/qrcode.png'));   // qr code
              $logo = imagecreatefrompng($merge_icon); // icon 
              $QR_width = imagesx($QR);                // qr code width
              $QR_height = imagesy($QR);               // qr code height
@@ -374,7 +374,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
              // reassemble the image and resize
              imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
              // qr code with icon at the center
-             $QRHasLogo = "QRHasLogo.png";
+             $QRHasLogo = storage_path('QRHasLogo.png');
              imagepng($QR, $QRHasLogo);
         
         return $this;
