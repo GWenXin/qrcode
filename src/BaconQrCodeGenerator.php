@@ -308,7 +308,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         // resize frame        
         $img = ImageQr::make($frame_path);
         $img->resize($frame_width, $frame_height); //(x, y)
-        $img->save(public_path('new_frame.png')); // resized frame
+        $img->save(storage_path('new_frame.png')); // resized frame
 
         return $this;
        // return $img;
