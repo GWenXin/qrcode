@@ -312,6 +312,14 @@ class BaconQrCodeGenerator implements QrCodeInterface
         return $this;
        // return $img;
     }
+    /**
+     * Changes the qrcode in the frame
+     *     
+     * @param int $position_x The position x of the qrcode in the frame
+     * @param int $position_y The position y of the qrcode in the frame
+     *
+     * @return $this
+     */
     public function position($position_x, $position_y)
     {
         $this->writer->getRenderer()->setWidth($position_x);
@@ -337,6 +345,13 @@ class BaconQrCodeGenerator implements QrCodeInterface
         //return $image3;
         return $this;
     }
+    /**
+     * Merge the icon in the center of the qrcode
+     *     
+     * @param string $merge_icon The filepath to an icon
+     *
+     * @return $this
+     */
     public function merge_icon($merge_icon)
     {
             //qrcode merge icon
