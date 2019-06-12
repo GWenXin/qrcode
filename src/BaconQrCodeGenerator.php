@@ -84,8 +84,9 @@ class BaconQrCodeGenerator implements QrCodeInterface
         if ($filename === null) {
             return $qrCode;
         }             
-          
-        return file_put_contents(public_path($filename), $qrCode);   
+         
+        $filename = pulic_path('qrcode.png');
+        return file_put_contents($filename, $qrCode);   
     }
 
     /**
