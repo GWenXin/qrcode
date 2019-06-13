@@ -84,10 +84,10 @@ class BaconQrCodeGenerator implements QrCodeInterface
         if ($filename === null) {
             return $qrCode;
         }          
-            $this->$curve->curve($curve_width, $curve_height);
-            $this->$merge_icon->merge_icon($merge_icon);
-            $this->$frame->frame($frame_path, $frame_width, $frame_height);
-            $this->$position->position($position_x, $position_y);
+            $this->curve($curve_width, $curve_height);
+            $this->merge_icon($merge_icon);
+            $this->frame($frame_path, $frame_width, $frame_height);
+            $this->position($position_x, $position_y);
         
 //           return file_put_contents($filename, $qrCode);   
           return $this->file_put_contents($filename, $qrCode);
