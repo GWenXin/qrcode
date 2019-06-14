@@ -14,6 +14,6 @@ This is a customize qr code generator.
                             ->backgroundColor(255, 255, 255) //qrcode background color
                             ->margin(1) //qrcode border                       
                             ->errorCorrection('H') //qrcode error correction  
-                            ->encoding('UTF-8')                            
-                            ->generate('This is a qrcode generator.', storage_path('qrcode.png'));
+                            ->encoding('UTF-8')   //qrcode encoding                         
+                            ->generate('This is a qrcode generator.', storage_path('qrcode.png')); //value and qrcode path
 ```
