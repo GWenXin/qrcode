@@ -4,7 +4,7 @@ This is a customize qr code generator.
 
 ## Example Code
 ```php
-  $qrcodeImage = QrCode::format('png')     
+  $customQrcode = QrCode::format('png')     
                             ->curve(5,5) // curve of the qrcode
                             ->merge_icon(storage_path('icon/logo4.png'))  // merge icon at the center of the qrcode
                             ->frame(storage_path('frame/frame2.png'), 630, 630) //frame file , frame with and height  
