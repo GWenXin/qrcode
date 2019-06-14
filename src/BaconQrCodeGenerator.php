@@ -297,6 +297,11 @@ class BaconQrCodeGenerator implements QrCodeInterface
         imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
         // merge images   
         var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
+        
+        Storage::delete('qrcode.png');
+        Storage::delete('QRHasLogo.png');
+        Storage::delete('new_frame.png');
+        Storage::delete('qrCurve.png');
 
         //return $image3;
         return $this;
