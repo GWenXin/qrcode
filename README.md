@@ -3,7 +3,9 @@
 This is a qr code generator that can customize your our QRcode.
 
 ### Run this command to install package
+```php
 composer require wenxin/qrcode
+```
 
 ### Open config/app.php file and add this class to the providers array.
 ```php
