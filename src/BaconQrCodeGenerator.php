@@ -67,7 +67,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
      */
     public function generate($text, $filename = null)
     {
-        $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection);
+        $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection, $this->curve, $this->merge_icon, $this->frame, $this->position);
 
         if ($filename === null) {
             return $qrCode;
@@ -77,8 +77,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
 //             $this->frame($frame_path, $frame_width, $frame_height);
 //             $this->position($position_x , $position_y);
         
-        return $this->Storage::disk('local')->put('qrcode.png', $qrCode);;   
-//         return file_put_contents($filename, $qrCode);
+//         return $this->Storage::disk('local')->put('qrcode.png', $qrCode);   
+        return file_put_contents($filename, $qrCode);
     }
     
     /**
