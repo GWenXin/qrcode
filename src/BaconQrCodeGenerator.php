@@ -39,13 +39,6 @@ class BaconQrCodeGenerator implements QrCodeInterface
     protected $encoding = Encoder::DEFAULT_BYTE_MODE_ECODING;
 
     /**
-     * Holds an image string that will be merged with the QrCode.
-     *
-     * @var null|string
-     */
-//     protected $imageMerge = null;
-
-    /**
      * The percentage that a merged image should take over the source image.
      *
      * @var float
@@ -76,11 +69,6 @@ class BaconQrCodeGenerator implements QrCodeInterface
     {
         $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection);
 
-//         if ($this->imageMerge !== null) {
-//             $merger = new ImageMerge(new Image($qrCode), new Image($this->imageMerge));
-//             $qrCode = $merger->merge($this->imagePercentage);
-//         } 
-
         if ($filename === null) {
             return $qrCode;
         }          
@@ -93,43 +81,6 @@ class BaconQrCodeGenerator implements QrCodeInterface
         return file_put_contents($filename, $qrCode);
     }
     
-    /**
-     * Merges an image with the center of the QrCode.
-     *
-     * @param string $filepath The filepath to an image
-     * @param float $percentage The amount that the merged image should be placed over the qrcode.
-     * @param boolean $absolute Whether to use an absolute filepath or not.
-     *
-     * @return $this
-     */
-//     public function merge($filepath, $percentage = .2, $absolute = false)
-//     {
-//         if (function_exists('base_path') && !$absolute) {
-//             $filepath = base_path().$filepath;
-//         }
-
-//         $this->imageMerge = file_get_contents($filepath);
-//         $this->imagePercentage = $percentage;
-
-//         return $this;
-//     }
-
-    /**
-     * Merges an image string with the center of the QrCode, does not check for correct format.
-     *
-     * @param string $content The string contents of an image.
-     * @param float $percentage The amount that the merged image should be placed over the qrcode.
-     *
-     * @return $this
-     */
-//     public function mergeString($content, $percentage = .2)
-//     {
-//         $this->imageMerge = $content;
-//         $this->imagePercentage = $percentage;
-
-//         return $this;
-//     }
-
     /**
      * Switches the format of the outputted QrCode or defaults to SVG.
      *
