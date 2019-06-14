@@ -77,8 +77,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
 //             $this->frame($frame_path, $frame_width, $frame_height);
 //             $this->position($position_x , $position_y);
         
-//         return $this->Storage::disk('local')->put('qrcode.png', $qrCode);  
-        
+//         return $this->Storage::disk('local')->put('qrcode.png', $qrCode);          
         Storage::delete('qrCurve.png');
         Storage::delete('QRHasLogo.png');
         Storage::delete('new_frame.png');
