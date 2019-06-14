@@ -405,8 +405,11 @@ class BaconQrCodeGenerator implements QrCodeInterface
             );
 //         $imagick = storage_path('qrCurve.png');
         Storage::disk('local')->put('app/qrCurve.png', $imagick);
+        Storage::delete('qrcode.png');
+        Storage::delete('QRHasLogo.png');
+        Storage::delete('new_frame.png');
+        Storage::delete('mergeFrameQr.png');
 
        return $this;
-       // return $imagick;
     }  
 }
