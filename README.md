@@ -1,6 +1,7 @@
 # QR Code Generator
 
-This is a customize qr code generator.
+This is a qr code generator that can customize your our QRcode.
+
 
 ## Example Code
 ```php
