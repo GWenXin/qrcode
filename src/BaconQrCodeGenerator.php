@@ -287,7 +287,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $this->writer->getRenderer()->setWidth($position_x);
         $this->writer->getRenderer()->setHeight($position_y);
         
-        if(hasfile('app/QRHasLogo.png')){
+        if($request->hasfile('app/QRHasLogo.png')){
             //image 1 - frame resized
             $path_1 = storage_path('app/new_frame.png');
             //image 2
@@ -311,7 +311,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
             Storage::delete('qrCurve.png');
             
             return $this;
-        }elseif(hasfile('app/qrCurve.png')){
+        }elseif($request->hasfile('app/qrCurve.png')){
                 //image 1 - frame resized
                 $path_1 = storage_path('app/new_frame.png');
                 //image 2
@@ -335,7 +335,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
                 Storage::delete('qrCurve.png');
             
             return $this;
-        }elseif(hasfile('app/qrode.png')){
+        }elseif($request->hasfile('app/qrode.png')){
                //image 1 - frame resized
                 $path_1 = storage_path('app/new_frame.png');
                 //image 2
@@ -372,7 +372,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
     {           
             $this->merge_icon = file_get_contents($merge_icon);
         
-             if(hasFile('app/qrCurve.png')){
+             if($request->hasFile('app/qrCurve.png')){
                      $QR = imagecreatefromstring(file_get_contents(storage_path('app/qrCurve.png')));   // qr code
                      $logo = imagecreatefrompng($merge_icon); // icon 
                      $QR_width = imagesx($QR);                // qr code width
@@ -393,7 +393,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
                      Storage::delete('qrCurve.png');
                  
                  return $this;
-             }elseif(hasFile('app/qrcode.png')){
+             }elseif($request->hasFile('app/qrcode.png')){
                      $QR = imagecreatefromstring(file_get_contents(storage_path('app/qrcode.png')));   // qr code
                      $logo = imagecreatefrompng($merge_icon); // icon 
                      $QR_width = imagesx($QR);                // qr code width
