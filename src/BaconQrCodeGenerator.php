@@ -67,7 +67,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
      */
     public function generate($text, $filename = null)
     {
-        $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection, $this->curve, $this->merge_icon, $this->frame, $this->position);
+        $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection);
 
         if ($filename === null) {
             return $qrCode;
