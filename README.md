@@ -2,6 +2,12 @@
 
 This is a qr code generator that can customize your our QRcode.
 
+### Open config/app.php file and add this class to the providers array.
+Wenxin\Qrcode\QrCodeServiceProvider::class
+
+### At the same file add the following line to aliases array.
+'QrCode' => Wenxin\Qrcode\Facades\QrCode::class
+
 
 ## Example Code
 ```php
