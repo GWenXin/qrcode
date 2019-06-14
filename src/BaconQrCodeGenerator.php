@@ -335,7 +335,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
                     Storage::delete('qrCurve.png');
 
                 return $this;
-                }elseif(file_exist(storage_path('app/QRHasLogo.png'))){
+                }elseif(file_exists(storage_path('app/QRHasLogo.png'))){
                     //image 1 - frame resized
                     $path_1 = storage_path('app/new_frame.png');
                     //image 2
