@@ -1,6 +1,6 @@
 # QR Code Generator
 
-This is a qr code generator that can customize your our QRcode.
+This is a qr code generator package that can customize your our QRcode.
 
 ### Run this command to install package
 ```php
