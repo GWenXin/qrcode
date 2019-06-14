@@ -312,7 +312,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         // resize frame        
         $img = ImageQr::make($frame_path);
         $img->resize($frame_width, $frame_height); //(x, y)
-        $img->save(storage_path('new_frame.png')); // resized frame
+        $img->save(storage_path('app/new_frame.png')); // resized frame
 
         return $this;
        // return $img;
@@ -331,9 +331,9 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $this->writer->getRenderer()->setHeight($position_y);
         
         //image 1 - frame resized
-        $path_1 = storage_path('new_frame.png');
+        $path_1 = storage_path('app/new_frame.png');
         //image 2
-        $path_2 = storage_path('QRHasLogo.png'); 
+        $path_2 = storage_path('app/QRHasLogo.png'); 
         
         //imagecreatefrompng($filename)
         $image_1 = imagecreatefromstring(file_get_contents($path_1));
@@ -345,7 +345,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         // merge                               x            y
         imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
         // merge images   
-        var_dump(imagepng($image_3,storage_path('mergeFrameQr.png')));
+        var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
 
         //return $image3;
         return $this;
@@ -378,7 +378,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
              // reassemble the image and resize
              imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
              // qr code with icon at the center
-             $QRHasLogo = storage_path('QRHasLogo.png');
+             $QRHasLogo = storage_path('app/QRHasLogo.png');
              imagepng($QR, $QRHasLogo);
         
         return $this;
@@ -396,7 +396,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         $this->writer->getRenderer()->setWidth($curve_width);
         $this->writer->getRenderer()->setHeight($curve_height);
 
-        $imagick = new Imagick(storage_path('qrcode.png'));
+        $imagick = new Imagick(storage_path('app/qrcode.png'));
         $imagick->statisticImage(
                 Imagick::STATISTIC_MEDIAN,
                 $curve_width, //width
@@ -404,7 +404,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
                 Imagick::CHANNEL_DEFAULT
             );
 //         $imagick = storage_path('qrCurve.png');
-        Storage::disk('local')->put('qrCurve.png', $imagick);
+        Storage::disk('local')->put('app/qrCurve.png', $imagick);
 
        return $this;
        // return $imagick;
