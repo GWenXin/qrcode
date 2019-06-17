@@ -20,8 +20,12 @@ Wenxin\Qrcode\QrCodeServiceProvider::class
 ```php
 use QrCode;
 ```
-#### Important
-Before you custom your QR code with curve, icon, and frame, you must generate a original qrcode.
+ 
+#### Workflow of the QR code generator
+First, generate a basic qrcode and saved file as 'qrcode.png'.
+Then, Use 'qrcode.png' to implement the customize with curve, icon, and frame.
+##### Important
+Before custom your QR code with curve, icon, and frame, you must generate a original qrcode.
 
 ## Example Code
 ```php
