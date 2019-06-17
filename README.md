@@ -36,7 +36,7 @@ $qrcodeImage = QrCode::format('png')
                      ->backgroundColor(255, 255, 255) //qrcode background color                              
                      ->margin(1) //qrcode border                       
                      ->errorCorrection('H') //qrcode error correction  
-                     ->encoding('UTF-8')                            
+                     ->encoding('UTF-8') //set the character encoder.                           
                      ->generate('This is a custom QR code generator.',storage_path('app/qrcode.png'));
                      //QR code content value and save file path
                      
