@@ -20,6 +20,9 @@ Wenxin\Qrcode\QrCodeServiceProvider::class
 ```php
 use QrCode;
 ```
+#### Important
+Before you custom your QR code with curve, icon, and frame, you must generate a original qrcode.
+
 ## Example Code
 ```php
 //original QR code
@@ -43,7 +46,6 @@ $customqrcode = QrCode::curve(5,5) // curve of the qrcode
 
 ```
 
-###Important
-Before you custom your QR code with curve, icon, and frame, you must generate a original qrcode.
+
 
 
