@@ -16,7 +16,7 @@ Wenxin\Qrcode\QrCodeServiceProvider::class
 ```php
 'QrCode' => Wenxin\Qrcode\Facades\QrCode::class
 ```
-## Add use package nama onto when you are using 
+### Add 'use package_nama' on top when you are implementing.
 ```php
 use QrCode;
 ```
@@ -29,7 +29,7 @@ $qrcodeImage = QrCode::format('png')
                      ->margin(1) //qrcode border                       
                      ->errorCorrection('H') //qrcode error correction  
                      ->encoding('UTF-8')                            
-                     ->generate('Both suspects tested positive for methamphetamine and also have criminal records.',storage_path('app/qrcode.png'));
+                     ->generate('This is a custom QR code generator.',storage_path('app/qrcode.png'));
                                                                 
         
 $customqrcode = QrCode::curve(5,5) // curve of the qrcode
@@ -39,3 +39,8 @@ $customqrcode = QrCode::curve(5,5) // curve of the qrcode
         
 
 ```
+
+####Important
+Before you custom your QR code with curve, icon, and frame, you must generate a original qrcode.
+
+
