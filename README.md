@@ -1,6 +1,6 @@
 # QR Code Generator
 
-This is a qr code generator package that can customize your own QRcode with color, icon, curve, and frame.
+This is a qr code generator package that can customize your own QRcode with size, color, background color, margin, icon, curve, and frame.
 
 ### Run this command to install package
 ```php
