@@ -234,7 +234,6 @@ class BaconQrCodeGenerator implements QrCodeInterface
 
         return new $class();
     }
-
     /**
      * Formats the method name correctly.
      *
