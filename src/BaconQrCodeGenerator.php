@@ -75,14 +75,13 @@ class BaconQrCodeGenerator implements QrCodeInterface
 //            $this->curve($curve_width, $curve_height);
 //            $this->merge_icon($merge_icon);
 //            $this->frame($frame_path, $frame_width, $frame_height);
-//            $this->position($position_x , $position_y);
-        
+//            $this->position($position_x , $position_y);             
           
-        Storage::delete('qrCurve.png');
-        Storage::delete('QRHasLogo.png');
-        Storage::delete('new_frame.png');
-        Storage::delete('mergeFrameQr.png');
-        
+            Storage::delete('qrCurve.png');
+            Storage::delete('QRHasLogo.png');
+            Storage::delete('new_frame.png');
+            Storage::delete('mergeFrameQr.png');
+
 //         return Storage::disk('local')->put('app/qrcode.png', $qrCode);        
         return file_put_contents($filename, $qrCode);
     }
@@ -170,7 +169,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
      * @return $this
      */
     public function errorCorrection($level)
-    {
+    {3*0
         $this->errorCorrection = constant("BaconQrCode\Common\ErrorCorrectionLevel::$level");
 
         return $this;
