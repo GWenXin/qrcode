@@ -1,6 +1,6 @@
 # QR Code Generator
 
-This is a qr code generator package that can customize your our QRcode.
+This is a qr code generator package that can customize your own QRcode with color, icon, curve, and frame.
 
 ### Run this command to install package
 ```php
@@ -16,7 +16,10 @@ Wenxin\Qrcode\QrCodeServiceProvider::class
 ```php
 'QrCode' => Wenxin\Qrcode\Facades\QrCode::class
 ```
-
+## Add use package nama onto when you are using 
+```php
+use QrCode;
+```
 ## Example Code
 ```php
 $qrcodeImage = QrCode::format('png')      
