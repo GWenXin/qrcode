@@ -1,6 +1,6 @@
 {
     "name": "wenxin/qrcode",
-    "description": "This is a qr code generator that can customize your our QRcode.",
+    "description": "This is a QR code generator that can customize your own QR code.",
     "keywords": ["qrcode", "qrcode generator", "generator", "frame", "icon"],
     "license" : "MIT",
     "authors": [
