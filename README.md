@@ -24,7 +24,7 @@ use QrCode;
 #### Workflow of the QR code generator
 First, generate a basic qrcode and saved file as 'qrcode.png'.
 Then, Use 'qrcode.png' to implement the customize with curve, icon, and frame.
-##### Important
+#### Important
 Before custom your QR code with curve, icon, and frame, you must generate a original qrcode.
 
 ## Example Code
