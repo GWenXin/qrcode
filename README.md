@@ -23,7 +23,7 @@ use QrCode;
  
 #### Workflow of the QR code generator
 First, generate a basic qrcode and saved file as 'qrcode.png'.
-Then, Use 'qrcode.png' to implement the customize with curve, icon, and frame.
+Then, use 'qrcode.png' file to implement the customize with curve, icon, and frame.
 #### Important
 Before custom your QR code with curve, icon, and frame, you must generate a original qrcode.
 
@@ -41,7 +41,7 @@ $qrcodeImage = QrCode::format('png')
                      //QR code content value and save file path
                      
                                                                 
-//Customize QR code with curve, icon, and frame       
+//customize QR code with curve, icon, and frame       
 $customqrcode = QrCode::curve(5,5) // curve of the qrcode
                       ->merge_icon(storage_path('icon/logo6.png'))  // merge icon at the center of the qrcode
                       ->frame(storage_path('frame/frame2.png'), 630, 630) //frame file , frame with and height  
