@@ -169,7 +169,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
      * @return $this
      */
     public function errorCorrection($level)
-    {3*0
+    {
         $this->errorCorrection = constant("BaconQrCode\Common\ErrorCorrectionLevel::$level");
 
         return $this;
