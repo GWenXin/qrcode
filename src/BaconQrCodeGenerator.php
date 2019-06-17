@@ -83,8 +83,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
         Storage::delete('new_frame.png');
         Storage::delete('mergeFrameQr.png');
         
-        return Storage::disk('local')->put('app/qrcode.png', $qrCode);        
-//         return file_put_contents($filename, $qrCode);
+//         return Storage::disk('local')->put('app/qrcode.png', $qrCode);        
+        return file_put_contents($filename, $qrCode);
     }
     
     /**
