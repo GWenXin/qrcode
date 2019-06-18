@@ -35,9 +35,7 @@ interface QrCodeInterface
     /**
      * Changes the foreground color of a QrCode.
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
+     * @param string $color
      *
      * @return $this
      */
@@ -46,13 +44,11 @@ interface QrCodeInterface
     /**
      * Changes the background color of a QrCode.
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
+     * @param string $background_color
      *
      * @return $this
      */
-    public function backgroundColor($red, $green, $blue);
+    public function backgroundColor($background_color);
 
     /**
      * Changes the error correction level of a QrCode.
