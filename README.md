@@ -4,7 +4,7 @@ This is a qr code generator package that can customize your own QRcode with size
 
 ### Run this command to install package
 ```php
-composer require wenxin/qrcode
+$ composer require wenxin/qrcode
 ```
 
 ### Open config/app.php file and add this class to the providers array.
