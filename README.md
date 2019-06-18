@@ -25,13 +25,13 @@ use QrCode;
 ##### format('png') - string
 QR code file type
 ##### size(500) - integer
-Sets QR code size(px).Size range from 0 to 1000px.
+Sets QR code size(px). Size range from 0 to 1000px.
 ##### color('8E44AD') - string
-Sets QR code color(Hex).Keyin without '#', example: 28B463, 8E44AD  
+Sets QR code color(Hex). Keyin without '#', example: 28B463, 8E44AD  
 ##### backgroundColor('FDEBD0') - string
-Sets QR code background color(Hex).Keyin without '#', example: F9E79F, FDEBD0
+Sets QR code background color(Hex). Keyin without '#', example: F9E79F, FDEBD0
 ##### margin(2) - integer
-Sets border size(px) of the QR code.Size range from 0 to 10px.
+Sets border size(px) of the QR code. Size range from 0 to 10px.
 ##### errorCorrection('H') - string
 Sets QR code error correction. QR Code has error correction capability to restore data if the code
 is dirty or damaged. Four error correction levels ('L' - 7%, 'M' - 15%, 'Q' - 25%, 'H' - 30%) are available for users to choose according to the operating environment. Raising this level improves error correction capability but also increases the amount
