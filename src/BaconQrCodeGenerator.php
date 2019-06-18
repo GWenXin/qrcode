@@ -153,8 +153,12 @@ class BaconQrCodeGenerator implements QrCodeInterface
      *
      * @return $this
      */
-    public function backgroundColor($red, $green, $blue)
+    public function backgroundColor($backgroundcolor)
     {
+        //convert color hex to rgb
+        $hex = "#".$backgroundcolor;
+        list($red, $green, $blue) = sscanf($hex, "#%02x%02x%02x");
+        
         $this->writer->getRenderer()->setBackgroundColor(new Rgb($red, $green, $blue));
 
         return $this;
