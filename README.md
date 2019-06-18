@@ -55,7 +55,7 @@ size. Maximum 5MB (upload .png file only) frame width and height size(px) of QR 
 (integer) Position X and Y (px) of QR code in the frame. Position range from 0 to 300px.
 
 
-#### Workflow of the QR code generator
+### Workflow of the QR code generator
 First, generate a basic qrcode and saved file as 'qrcode.png'.
 Then, use 'qrcode.png' file to implement the customize with curve, icon, and frame.
 
