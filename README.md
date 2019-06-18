@@ -21,6 +21,7 @@ Wenxin\Qrcode\QrCodeServiceProvider::class
 use QrCode;
 ```
 ## Description Parameters and Example
+
 ##### format('png') - string
 QR code file type
 ##### size(500) - integer
@@ -32,7 +33,7 @@ Sets QR code background color(Hex).Keyin without '#', example: F9E79F, FDEBD0
 ##### margin(2) - integer
 Sets border size(px) of the QR code.Size range from 0 to 10px.
 ##### errorCorrection('H') - string
-QR code error correction. QR Code has error correction capability to restore data if the code
+Sets QR code error correction. QR Code has error correction capability to restore data if the code
 is dirty or damaged. Four error correction levels ('L' - 7%, 'M' - 15%, 'Q' - 25%, 'H' - 30%) are available for users to choose according to the operating environment. Raising this level improves error correction capability but also increases the amount
 of data QR Code size.
 ##### encoding('UTF-8') - string
@@ -52,7 +53,7 @@ Upload and merge icon at the center of the QR code. Maximum 5MB (upload .png fil
 Upload frame for merge QR code, sets frame width and frame height
 size. Maximum 5MB (upload .png file only) frame width and height size(px) of QR code frame. Maximum 1100px.
 ##### position(100,100) - integer
-Position X and Y (px) of QR code in the frame. Position range from 0 to 300px.
+Sets position X and Y (px) of QR code in the frame. Position range from 0 to 300px.
 
 
 ### Workflow of the QR code generator
