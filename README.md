@@ -38,7 +38,7 @@ Four error correction levels ('L' - 7%, 'M' - 15%, 'Q' - 25%, 'H' - 30%) are ava
 to the operating environment. Raising this level improves error correction capability but also increases the amount of
 data QR Code size.
 ##### encoding('UTF-8') - string
-Sets the character encoder. Encoding list:-
+Sets the character encoder. Encoding list :-
 
 ISO-8859-1, ISO-8859-2 ,ISO-8859-3, ISO-8859-4, ISO-8859-5, ISO-8859-6, ISO-8859-7, ISO-8859-8, ISO-8859-9,
 ISO-8859-10, ISO-8859-11, ISO-8859-12, ISO-8859-13, ISO-8859-14, ISO-8859-15, ISO-8859-16, SHIFT-JIS, WINDOWS-1250, WINDOWS-1251, WINDOWS-1252, WINDOWS-1256, UTF-16BE, UTF-8, ASCII, GBK, EUC-KR.
