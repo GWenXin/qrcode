@@ -51,7 +51,7 @@ Upload and merge icon at the center of the QR code. Maximum 5MB (upload .png fil
 ##### frame('frame/frame8.png', 630, 630) - string, integer
 Upload frame for merge QR code, sets frame width and frame height
 size. Maximum 5MB (upload .png file only) frame width and height size(px) of QR code frame. Maximum 1100px.
-##### position(100,100) - integer
+##### position(100, 100) - integer
 Sets position X and Y (px) of QR code in the frame. Position range from 0 to 300px.
 
 
