@@ -50,7 +50,8 @@ merge_icon('icon/logo14.png') - (string) Upload and merge icon at the center of 
 frame('frame/frame8.png', 630, 630) - (string, integer) Upload frame for merge QR code, sets frame width and frame height
 size. Maximum 5MB (upload .png file only) frame width and height size(px) of QR code frame. Maximum 1100px.
 
-position(100,100) - (integer) Position X and Y (px) of QR code in the frame. Position range from 0 to 300px.
+##### position(100,100)
+(integer) Position X and Y (px) of QR code in the frame. Position range from 0 to 300px.
  
 #### Workflow of the QR code generator
 First, generate a basic qrcode and saved file as 'qrcode.png'.
