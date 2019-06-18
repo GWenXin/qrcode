@@ -52,7 +52,7 @@ interface QrCodeInterface
      *
      * @return $this
      */
-    public function backgroundColor($red, $green, $blue);
+    public function backgroundColor($backgroundcolor);
 
     /**
      * Changes the error correction level of a QrCode.
