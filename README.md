@@ -12,11 +12,11 @@ composer require wenxin/qrcode
 Wenxin\Qrcode\QrCodeServiceProvider::class
 ```
 
-### At the same file add the following line to aliases array. 
+### At the same file (config/app.php) add the following line to aliases array. 
 ```php
 'QrCode' => Wenxin\Qrcode\Facades\QrCode::class
 ```
-### Add 'use package_nama' on top when you are implementing.
+### Add 'use QrCode' on top when you are implementing.
 ```php
 use QrCode;
 ```
