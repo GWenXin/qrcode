@@ -12,7 +12,7 @@ composer require wenxin/qrcode
 Wenxin\Qrcode\QrCodeServiceProvider::class
 ```
 
-### At the same file add the following line to aliases array.
+### At the same file add the following line to aliases array. 
 ```php
 'QrCode' => Wenxin\Qrcode\Facades\QrCode::class
 ```
