@@ -41,7 +41,7 @@ interface QrCodeInterface
      *
      * @return $this
      */
-    public function color($red, $green, $blue);
+    public function color($color);
 
     /**
      * Changes the background color of a QrCode.
