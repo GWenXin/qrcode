@@ -117,10 +117,9 @@ interface QrCodeInterface
     /**
      * Curve of the QrCode.
      *
-     * @param int $curve_width size of curve width
-     * @param int $curve_height size of curve height
+     * @param int $curve The size of curve 
      *
      * @return $this
      */
-    public function curve($curve_width, $curve_height);
+    public function curve($curve);
 }
