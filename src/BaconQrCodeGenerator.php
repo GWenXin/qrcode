@@ -72,7 +72,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
         if ($filename === null) {
             return $qrCode;
         }          
-        
+            // delete files
             Storage::delete('qrCurve.png');
             Storage::delete('QRHasLogo.png');
             Storage::delete('new_frame.png');
@@ -300,7 +300,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
                     imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
                     // merge images   
                     var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
-
+                    
+                    // delete files
                     Storage::delete('qrcode.png');
                     Storage::delete('QRHasLogo.png');
                     Storage::delete('new_frame.png');
@@ -324,7 +325,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
                     imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
                     // merge images   
                     var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
-
+                    
+                    // delete files
                     Storage::delete('qrcode.png');
                     Storage::delete('QRHasLogo.png');
                     Storage::delete('new_frame.png');
@@ -348,7 +350,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
                     imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
                     // merge images   
                     var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
-
+                    
+                    // delete files
                     Storage::delete('qrcode.png');
                     Storage::delete('QRHasLogo.png');
                     Storage::delete('new_frame.png');
@@ -385,6 +388,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
                      $QRHasLogo = storage_path('app/QRHasLogo.png');
                      imagepng($QR, $QRHasLogo);
                  
+                     // delete files
                      Storage::delete('qrcode.png'); 
                      Storage::delete('qrCurve.png');
                  
@@ -406,6 +410,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
                      $QRHasLogo = storage_path('app/QRHasLogo.png');
                      imagepng($QR, $QRHasLogo);
                  
+                     // delete files
                      Storage::delete('qrcode.png');
                  return $this;
              }
@@ -431,8 +436,9 @@ class BaconQrCodeGenerator implements QrCodeInterface
                 $curve, // curve height
                 Imagick::CHANNEL_DEFAULT
             );
-//         $imagick = storage_path('qrCurve.png');
+
         Storage::disk('local')->put('qrCurve.png', $imagick);
+        // delete files
         Storage::delete('qrcode.png');
         
        return $this;
