@@ -43,7 +43,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
      *
      * @var float
      */
-    protected $imagePercentage = .2;
+//    protected $imagePercentage = .2;
 
     /**
      * BaconQrCodeGenerator constructor.
