@@ -367,7 +367,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
      *
      * @return $this
      */
-    public function merge_icon($merge_icon)
+    public function merge_icon($merge_icon, $icon_size)
     {           
             $this->merge_icon = file_get_contents($merge_icon);
         
@@ -378,7 +378,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
                      $QR_height = imagesy($QR);               // qr code height
                      $logo_width = imagesx($logo);            // logo weight
                      $logo_height = imagesy($logo);           // logo height
-                     $logo_qr_width = $QR_width / 4;
+                     $logo_qr_width = $QR_width / $icon_size; // set icon size
                      $scale = $logo_width/$logo_qr_width;
                      $logo_qr_height = $logo_height/$scale;
                      $from_width = ($QR_width - $logo_qr_width) / 2;
