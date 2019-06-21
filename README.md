@@ -68,9 +68,10 @@ Save 'qrcode.png' file at laravel storage.
 ```php
 Sets curve size (px) of QR code. Size range from 1 to 10px.
 ```
-##### merge_icon('icon/logo14.png') - string
+##### merge_icon('icon/logo14.png', 4) - string, integer
 ```php
 Upload and merge icon at the center of the QR code. Maximum 5MB (upload .png file only)
+Sets size of the icon. Range of the size is 2 to 5. The larger the number the smaller the size.
 ```
 ##### frame('frame/frame8.png', 630, 630) - string, integer
 ```php
