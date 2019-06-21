@@ -11,9 +11,9 @@ use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Renderer\Image\RendererInterface;
 use BaconQrCode\Renderer\Image\Svg;
 use BaconQrCode\Writer;
-use Intervention\Image\ImageManagerStatic as ImageQr;
-use Illuminate\Support\Facades\Storage;
-use Imagick;
+use Intervention\Image\ImageManagerStatic as ImageQr;  // use for merge frame 
+use Illuminate\Support\Facades\Storage; // use for storage
+use Imagick; // use for curve qrcode 
 
 class BaconQrCodeGenerator implements QrCodeInterface
 {
