@@ -105,7 +105,7 @@ $qrcodeImage = QrCode::format('png')
                                                                 
 //customize QR code with curve, icon, and frame       
 $customqrcode = QrCode::curve(8) // set curve of the qrcode
-                      ->merge_icon('icon/logo6.png',4)  // merge icon at the center of the qrcode
+                      ->merge_icon('icon/logo6.png',4)  // merge icon at the center of the qrcode & set icon size
                       ->frame('frame/frame2.png', 630, 630) //frame file ,frame width and height  
                       ->position(125,125);  //set qrcode position x and y in the frame                                       
         
