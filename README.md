@@ -8,7 +8,7 @@ $ composer require wenxin/qrcode
 ```
 ### Install Imagick Extension
 
-User requires to install Imagick PHP extension to create and modify images in this package.
+User is requires to install Imagick PHP extension to create and modify images in this package.
 
 ### Open config/app.php file and add this class to the providers array.
 ```php
