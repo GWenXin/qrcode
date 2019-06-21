@@ -107,10 +107,10 @@ interface QrCodeInterface
      */
     public function position($position_x, $position_y);
     /**
-     * Icon merge at the center of the qrcode.
+     * Merge icon at the centre of the QrCode. 
      *
      * @param string $merge_icon The framepath to merge icon
-     * @param int  $icon_size set size of the icon
+     * @param int  $icon_size Sets size of the icon
      *
      * @return $this
      */
