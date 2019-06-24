@@ -26,7 +26,7 @@ use QrCode;
 ```
 ## Description Parameters and Example
 
-#### format('png') - string
+#### * format('png') - string
 ```php
 QR code file type
 ```
