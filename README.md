@@ -25,19 +25,19 @@ use QrCode;
 ```
 ## Description Parameters and Example
 
-##### format('png') - string
+#### format('png') - string
 ```php
 QR code file type
 ```
-##### size(500) - integer
+#### size(500) - integer
 ```php
 Sets QR code size(px). Size range from 0 to 1000px.
 ```
-##### color('8E44AD') - string
+#### color('8E44AD') - string
 ```php
 Sets QR code color(Hex). Keyin without '#', example: 28B463, 8E44AD  
 ```
-##### backgroundColor('FDEBD0') - string
+#### backgroundColor('FDEBD0') - string
 ```php
 Sets QR code background color(Hex). Keyin without '#', example: F9E79F, FDEBD0
 ```
