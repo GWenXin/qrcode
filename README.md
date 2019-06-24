@@ -6,7 +6,7 @@ This is a qr code generator package that can customize your own QRcode with size
 ```php
 $ composer require wenxin/qrcode
 ```
-### Install Imagick Extension
+### Install Imagick Extension https://pecl.php.net/package/imagick
 
 User is requires to install Imagick PHP extension to create and modify images in this package.
 
