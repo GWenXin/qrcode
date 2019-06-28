@@ -69,16 +69,43 @@ class BaconQrCodeGenerator implements QrCodeInterface
     {
         $qrCode = $this->writer->writeString($text, $this->encoding, $this->errorCorrection);
 
-        if ($filename === null) {
-            return $qrCode;
-        }          
-            // delete files
-            Storage::delete('qrCurve.png');
-            Storage::delete('QRHasLogo.png');
-            Storage::delete('new_frame.png');
-            Storage::delete('mergeFrameQr.png');
-        
-        return file_put_contents($filename, $qrCode);
+        $overwriteFlag = isset($this->writer->overwrite);
+
+
+        if($filename == null){
+            $tmpFilename = time().rand(10,10000).'.'.$this->writer->format;
+        }
+        else{
+            $tmpFilename = $filename.'.'.$this->writer->format;
+        }
+
+        $finalFilename = storage_path('app/public/'.$tmpFilename);
+
+        if(file_exists($finalFilename)){
+            if($overwriteFlag){
+                file_put_contents($finalFilename, $qrCode);
+            }
+            else{
+                throw new \InvalidArgumentException('File exists, if wish to overwrite old file please enable overwrite(true)');
+            }
+        }
+        else{
+            file_put_contents($finalFilename, $qrCode);
+        }
+
+        $this->qrOriPath = $finalFilename;
+        $this->qrTmpFilename = $tmpFilename;
+        $this->finalQRPath = $finalFilename;
+
+        return $this;
+
+//        return $finalFilename;
+    }
+
+    public function overwrite($overwrite = false){
+        $this->writer->overwrite = $overwrite;
+
+        return $this;
     }
     
     /**
@@ -106,6 +133,8 @@ class BaconQrCodeGenerator implements QrCodeInterface
                 throw new \InvalidArgumentException('Invalid format provided.');
         }
 
+        $this->writer->format = $format;
+
         return $this;
     }
 
@@ -118,10 +147,16 @@ class BaconQrCodeGenerator implements QrCodeInterface
      */
     public function size($pixels)
     {
-        $this->writer->getRenderer()->setHeight($pixels);
-        $this->writer->getRenderer()->setWidth($pixels);
+        if($pixels < 0 || $pixels > 1000){
+            throw new \InvalidArgumentException('Size range from 0 to 1000px.');
+        }
+        else{
+            $this->writer->getRenderer()->setHeight($pixels);
+            $this->writer->getRenderer()->setWidth($pixels);
 
-        return $this;
+            return $this;
+        }
+
     }
 
     /**
@@ -133,10 +168,10 @@ class BaconQrCodeGenerator implements QrCodeInterface
      */
     public function color($color)
     {
-        //convert color hex to rgb
+//        dd($color);
         $hex = "#".$color;
         list($red, $green, $blue) = sscanf($hex, "#%02x%02x%02x");
-        
+
         $this->writer->getRenderer()->setForegroundColor(new Rgb($red, $green, $blue));
 
         return $this;
@@ -180,7 +215,7 @@ class BaconQrCodeGenerator implements QrCodeInterface
      *
      * @return $this
      */
-    public function margin($margin)
+    public function margin($margin = 0)
     {
         $this->writer->getRenderer()->setMargin($margin);
 
@@ -257,15 +292,19 @@ class BaconQrCodeGenerator implements QrCodeInterface
      * @return $this
      */
     public function frame($frame_path, $frame_width, $frame_height)
-    {   
-        $this->frame = file_get_contents($frame_path);
-        $this->writer->getRenderer()->setWidth($frame_width);
-        $this->writer->getRenderer()->setHeight($frame_height);
+    {
+        $tmpFrameName = 'frame-'.time().rand(10,10000).'.png';
+
+//        $this->frame = file_get_contents($frame_path);
+//        $this->writer->getRenderer()->setWidth($frame_width);
+//        $this->writer->getRenderer()->setHeight($frame_height);
         
         // resize frame        
         $img = ImageQr::make($frame_path);
         $img->resize($frame_width, $frame_height); //(x, y)
-        $img->save(storage_path('app/new_frame.png')); // resized frame
+        $img->save(storage_path("app/public/$tmpFrameName")); // resized frame
+
+        $this->tmpFrame = $tmpFrameName;
 
         return $this;
        // return $img;
@@ -280,140 +319,189 @@ class BaconQrCodeGenerator implements QrCodeInterface
      */
     public function position($position_x, $position_y)
     {
-        $this->writer->getRenderer()->setWidth($position_x);
-        $this->writer->getRenderer()->setHeight($position_y);
-                    
-                if(file_exists(storage_path('app/qrcode.png'))){
-                    //image 1 - frame resized
-                    $path_1 = storage_path('app/new_frame.png');
-                    //image 2
-                    $path_2 = storage_path('app/qrcode.png'); 
+//        $this->writer->getRenderer()->setWidth($position_x);
+//        $this->writer->getRenderer()->setHeight($position_y);
 
-                    //imagecreatefrompng($filename)
-                    $image_1 = imagecreatefromstring(file_get_contents($path_1));
-                    $image_2 = imagecreatefromstring(file_get_contents($path_2));             
+//        dd($this,'pois');
 
-                    $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
-                    imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+        //image 1 - frame resized
+        $path_1 = storage_path('app/public/'.$this->tmpFrame);
+        //image 2
+        $path_2 = storage_path('app/public/'.$this->qrTmpFilename);
 
-                    // merge                               x            y
-                    imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
-                    // merge images   
-                    var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
-                    
-                    // delete files
-                    Storage::delete('qrcode.png');
-                    Storage::delete('QRHasLogo.png');
-                    Storage::delete('new_frame.png');
-                    Storage::delete('qrCurve.png');
+        //imagecreatefrompng($filename)
+        $image_1 = imagecreatefromstring(file_get_contents($path_1));
+        $image_2 = imagecreatefromstring(file_get_contents($path_2));
 
-                return $this;
-                }elseif(file_exists(storage_path('app/qrCurve.png'))){
-                     //image 1 - frame resized
-                    $path_1 = storage_path('app/new_frame.png');
-                    //image 2
-                    $path_2 = storage_path('app/qrCurve.png'); 
+        $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
 
-                    //imagecreatefrompng($filename)
-                    $image_1 = imagecreatefromstring(file_get_contents($path_1));
-                    $image_2 = imagecreatefromstring(file_get_contents($path_2));             
+        // merge                               x            y
+        imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100);
+        // merge images
+        imagepng($image_3,storage_path('app/public/'.$this->qrTmpFilename));
 
-                    $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
-                    imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+        // delete files
 
-                    // merge                               x            y
-                    imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
-                    // merge images   
-                    var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
-                    
-                    // delete files
-                    Storage::delete('qrcode.png');
-                    Storage::delete('QRHasLogo.png');
-                    Storage::delete('new_frame.png');
-                    Storage::delete('qrCurve.png');
+        Storage::delete('public/'.$this->tmpFrame);
 
-                return $this;
-                }elseif(file_exists(storage_path('app/QRHasLogo.png'))){
-                    //image 1 - frame resized
-                    $path_1 = storage_path('app/new_frame.png');
-                    //image 2
-                    $path_2 = storage_path('app/QRHasLogo.png'); 
+        return $this;
 
-                    //imagecreatefrompng($filename)
-                    $image_1 = imagecreatefromstring(file_get_contents($path_1));
-                    $image_2 = imagecreatefromstring(file_get_contents($path_2));             
 
-                    $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
-                    imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
 
-                    // merge                               x            y
-                    imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100); 
-                    // merge images   
-                    var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
-                    
-                    // delete files
-                    Storage::delete('qrcode.png');
-                    Storage::delete('QRHasLogo.png');
-                    Storage::delete('new_frame.png');
-                    Storage::delete('qrCurve.png');
-
-                 return $this;
-                }                
+//                if(file_exists(storage_path('app/qrcode.png'))){
+//                    //image 1 - frame resized
+//                    $path_1 = storage_path('app/new_frame.png');
+//                    //image 2
+//                    $path_2 = storage_path('app/qrcode.png');
+//
+//                    //imagecreatefrompng($filename)
+//                    $image_1 = imagecreatefromstring(file_get_contents($path_1));
+//                    $image_2 = imagecreatefromstring(file_get_contents($path_2));
+//
+//                    $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
+//                    imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+//
+//                    // merge                               x            y
+//                    imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100);
+//                    // merge images
+//                    var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
+//
+//                    // delete files
+//                    Storage::delete('qrcode.png');
+//                    Storage::delete('QRHasLogo.png');
+//                    Storage::delete('new_frame.png');
+//                    Storage::delete('qrCurve.png');
+//
+//                return $this;
+//                }elseif(file_exists(storage_path('app/qrCurve.png'))){
+//                     //image 1 - frame resized
+//                    $path_1 = storage_path('app/new_frame.png');
+//                    //image 2
+//                    $path_2 = storage_path('app/qrCurve.png');
+//
+//                    //imagecreatefrompng($filename)
+//                    $image_1 = imagecreatefromstring(file_get_contents($path_1));
+//                    $image_2 = imagecreatefromstring(file_get_contents($path_2));
+//
+//                    $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
+//                    imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+//
+//                    // merge                               x            y
+//                    imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100);
+//                    // merge images
+//                    var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
+//
+//                    // delete files
+//                    Storage::delete('qrcode.png');
+//                    Storage::delete('QRHasLogo.png');
+//                    Storage::delete('new_frame.png');
+//                    Storage::delete('qrCurve.png');
+//
+//                return $this;
+//                }elseif(file_exists(storage_path('app/QRHasLogo.png'))){
+//                    //image 1 - frame resized
+//                    $path_1 = storage_path('app/new_frame.png');
+//                    //image 2
+//                    $path_2 = storage_path('app/QRHasLogo.png');
+//
+//                    //imagecreatefrompng($filename)
+//                    $image_1 = imagecreatefromstring(file_get_contents($path_1));
+//                    $image_2 = imagecreatefromstring(file_get_contents($path_2));
+//
+//                    $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
+//                    imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+//
+//                    // merge                               x            y
+//                    imagecopymerge($image_3, $image_2, $position_x, $position_y, 0, 0, imagesx($image_2), imagesy($image_2), 100);
+//                    // merge images
+//                    var_dump(imagepng($image_3,storage_path('app/mergeFrameQr.png')));
+//
+//                    // delete files
+//                    Storage::delete('qrcode.png');
+//                    Storage::delete('QRHasLogo.png');
+//                    Storage::delete('new_frame.png');
+//                    Storage::delete('qrCurve.png');
+//
+//                 return $this;
+//                }
     }
     /**
      * Merge the icon in the center of the qrcode
      *     
      * @param string $merge_icon The filepath to an icon
+     * @param $icon_size
      *
      * @return $this
      */
     public function merge_icon($merge_icon, $icon_size)
     {           
-            $this->merge_icon = file_get_contents($merge_icon);
-        
-             if(file_exists(storage_path('app/qrCurve.png'))){
-                     $QR = imagecreatefromstring(file_get_contents(storage_path('app/qrCurve.png')));   // qr code
-                     $logo = imagecreatefrompng($merge_icon); // icon 
-                     $QR_width = imagesx($QR);                // qr code width
-                     $QR_height = imagesy($QR);               // qr code height
-                     $logo_width = imagesx($logo);            // logo weight
-                     $logo_height = imagesy($logo);           // logo height
-                     $logo_qr_width = $QR_width / $icon_size; // set icon size
-                     $scale = $logo_width/$logo_qr_width;
-                     $logo_qr_height = $logo_height/$scale;
-                     $from_width = ($QR_width - $logo_qr_width) / 2;
-                     // reassemble the image and resize
-                     imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
-                     // qr code with icon at the center
-                     $QRHasLogo = storage_path('app/QRHasLogo.png');
-                     imagepng($QR, $QRHasLogo);
-                 
-                     // delete files
-                     Storage::delete('qrcode.png'); 
-                     Storage::delete('qrCurve.png');
-                 
-                 return $this;
-             }elseif(file_exists(storage_path('app/qrcode.png'))){
-                     $QR = imagecreatefromstring(file_get_contents(storage_path('app/qrcode.png')));   // qr code
-                     $logo = imagecreatefrompng($merge_icon); // icon 
-                     $QR_width = imagesx($QR);                // qr code width
-                     $QR_height = imagesy($QR);               // qr code height
-                     $logo_width = imagesx($logo);            // logo weight
-                     $logo_height = imagesy($logo);           // logo height
-                     $logo_qr_width = $QR_width / 4;
-                     $scale = $logo_width/$logo_qr_width;
-                     $logo_qr_height = $logo_height/$scale;
-                     $from_width = ($QR_width - $logo_qr_width) / 2;
-                     // reassemble the image and resize
-                     imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
-                     // qr code with icon at the center
-                     $QRHasLogo = storage_path('app/QRHasLogo.png');
-                     imagepng($QR, $QRHasLogo);
-                 
-                     // delete files
-                     Storage::delete('qrcode.png');
-                 return $this;
-             }
+//            $this->merge_icon = file_get_contents($merge_icon);
+
+            $QR = imagecreatefromstring(file_get_contents(storage_path('app/public/'.$this->qrTmpFilename)));   // qr code
+            $logo = imagecreatefrompng($merge_icon); // icon
+            $QR_width = imagesx($QR);                // qr code width
+            $QR_height = imagesy($QR);               // qr code height
+            $logo_width = imagesx($logo);            // logo weight
+            $logo_height = imagesy($logo);           // logo height
+            $logo_qr_width = $QR_width / $icon_size; // set icon size
+            $scale = $logo_width/$logo_qr_width;
+            $logo_qr_height = $logo_height/$scale;
+            $from_width = ($QR_width - $logo_qr_width) / 2;
+            // reassemble the image and resize
+            imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
+            // qr code with icon at the center
+            $finalFilename = 'app/public/'.$this->qrTmpFilename;
+
+            $QRHasLogo = storage_path($finalFilename);
+            imagepng($QR, $QRHasLogo);
+
+            return $this;
+
+//
+//             if(file_exists(storage_path('app/qrCurve.png'))){
+//                     $QR = imagecreatefromstring(file_get_contents(storage_path('app/qrCurve.png')));   // qr code
+//                     $logo = imagecreatefrompng($merge_icon); // icon
+//                     $QR_width = imagesx($QR);                // qr code width
+//                     $QR_height = imagesy($QR);               // qr code height
+//                     $logo_width = imagesx($logo);            // logo weight
+//                     $logo_height = imagesy($logo);           // logo height
+//                     $logo_qr_width = $QR_width / $icon_size; // set icon size
+//                     $scale = $logo_width/$logo_qr_width;
+//                     $logo_qr_height = $logo_height/$scale;
+//                     $from_width = ($QR_width - $logo_qr_width) / 2;
+//                     // reassemble the image and resize
+//                     imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
+//                     // qr code with icon at the center
+//                     $QRHasLogo = storage_path('app/QRHasLogo.png');
+//                     imagepng($QR, $QRHasLogo);
+//
+//                     // delete files
+//                     Storage::delete('qrcode.png');
+//                     Storage::delete('qrCurve.png');
+//
+//                 return $this;
+//             }elseif(file_exists(storage_path('app/qrcode.png'))){
+//                     $QR = imagecreatefromstring(file_get_contents(storage_path('app/qrcode.png')));   // qr code
+//                     $logo = imagecreatefrompng($merge_icon); // icon
+//                     $QR_width = imagesx($QR);                // qr code width
+//                     $QR_height = imagesy($QR);               // qr code height
+//                     $logo_width = imagesx($logo);            // logo weight
+//                     $logo_height = imagesy($logo);           // logo height
+//                     $logo_qr_width = $QR_width / 4;
+//                     $scale = $logo_width/$logo_qr_width;
+//                     $logo_qr_height = $logo_height/$scale;
+//                     $from_width = ($QR_width - $logo_qr_width) / 2;
+//                     // reassemble the image and resize
+//                     imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
+//                     // qr code with icon at the center
+//                     $QRHasLogo = storage_path('app/QRHasLogo.png');
+//                     imagepng($QR, $QRHasLogo);
+//
+//                     // delete files
+//                     Storage::delete('qrcode.png');
+//                 return $this;
+//             }
             
     }
     /**
@@ -426,10 +514,12 @@ class BaconQrCodeGenerator implements QrCodeInterface
      */
     public function curve($curve)
     {
-        $this->writer->getRenderer()->setWidth($curve);
-        $this->writer->getRenderer()->setHeight($curve);
 
-        $imagick = new Imagick(storage_path('app/qrcode.png'));
+//        $this->writerCurve->getRenderer()->setWidth($curve);
+//        $this->writerCurve->getRenderer()->setHeight($curve);
+
+
+        $imagick = new Imagick($this->qrOriPath);
         $imagick->statisticImage(
                 Imagick::STATISTIC_MEDIAN,
                 $curve, // curve width
@@ -437,10 +527,18 @@ class BaconQrCodeGenerator implements QrCodeInterface
                 Imagick::CHANNEL_DEFAULT
             );
 
-        Storage::disk('local')->put('qrCurve.png', $imagick);
+        $tmpFilename = $this->qrTmpFilename;
+
+        $finalFilename = storage_path('app/public/'.$tmpFilename);
+
+        $this->finalQRPath = $finalFilename;
+
+        Storage::delete($this->qrTmpFilename);
+
+//        dd($tmpFilename);
+
+        Storage::disk('local')->put('public/'.$tmpFilename, $imagick);
         // delete files
-        Storage::delete('qrcode.png');
-        
-       return $this;
+        return $this;
     }  
 }

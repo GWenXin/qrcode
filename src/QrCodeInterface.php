@@ -123,4 +123,7 @@ interface QrCodeInterface
      * @return $this
      */
     public function curve($curve);
+
+    
+    public function overwrite($overwrite);
 }
